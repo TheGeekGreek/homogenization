@@ -1,0 +1,65 @@
+\input{header.tex}
+
+\begin{document}
+
+%Remake Tikz-picture
+%\tikzset{external/force remake}
+
+\begin{abstract}
+
+\end{abstract}
+
+\title{}
+\author{Yannis B\"{a}hni}
+\address[Yannis B\"{a}hni]{University of Zurich, R\"{a}mistrasse 71, 8006 Zurich}
+\email[Yannis B\"{a}hni]{\href{mailto:yannis.baehni@uzh.ch}{yannis.baehni@uzh.ch}}
+\thanks{}
+\maketitle
+
+\tableofcontents
+\listoffigures
+
+\mainsectionstyle
+
+\section{The Finite Element Method}
+We follow \cite{quarteroni2000numerical}. For a domain $U \subseteq \mathbb{R}^n$ and $f: U \to \mathbb{R}$ consider the boundary value problem
+\begin{align}
+	\begin{cases}
+		Lu = f & \text{in } U,\\
+		u = 0 & \text{on } \partial U,
+	\end{cases}
+	\label{eq:bvp}
+\end{align}
+
+\noindent where $L$ denotes a second-order partial differential operator. The requirement $u = 0$ on $\partial U$ is called \emph{Dirichlet's boundary condition}. We are mainly concerned with the case $n = 1$, $U = \intoo{0,1}$ and the explicit choice 
+\begin{equation}
+	Lu = -(\alpha u')'(x) + (\beta u')(x) + (\gamma u)(x)
+	\label{eq:explicit}
+\end{equation}
+
+\noindent where $\alpha,\beta,\gamma \in C(\intcc{0,1})$ and $\alpha > 0$. Define 
+\begin{equation}
+	H_0^1(0,1) := \cbr[0]{v \in L^2(0,1) : v' \in L^2(0,1), v(0) = v(1) = 0}.
+	\label{}
+\end{equation}
+
+We say that $u \in H^1_0(0,1)$ is a \emph{weak solution} of the boundary value problem (\ref{eq:bvp}) with $Lu$ as defined in (\ref{eq:explicit}) if
+\begin{equation}
+	\int_0^1\sbr[0]{\alpha u'v' + \beta u' v + \gamma uv }\d x = \int_0^1 fv \d x \qquad \forall v \in H^1_0(0,1).
+	\label{}
+\end{equation}
+
+
+
+
+
+
+
+\originalsectionstyle
+
+%Appendix
+\appendix
+\begin{appendix}
+
+\end{appendix}
+\end{document}

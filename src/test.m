@@ -1,0 +1,11 @@
+f = @(x) sin(x);
+alpha = @(x) 1 * x;
+beta = @(x) 0 * x;
+gamma = @(x) 0 * x;
+a = 0;
+b = 1;
+ua = 0;
+ub = 0;
+N = 25;
+[ uh,x ] = FEM1( alpha,beta,gamma,f,a,b,ua,ub,N );
+plot( x,uh );
