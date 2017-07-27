@@ -12,7 +12,7 @@
 
 %Page Setup
 \documentclass[
-	11pt, 
+	12pt, 
 	oneside, 
 	a4paper,
 	reqno,
@@ -26,6 +26,8 @@
 	bottom = 3cm
 ]{geometry}
 
+\usepackage{mathptmx}
+
 %Headers and footers
 \usepackage{fancyhdr}
 	\pagestyle{fancy}
@@ -37,6 +39,12 @@
 		Yannis B\"{a}hni\\
 		\href{mailto:yannis.baehni@uzh.ch}{yannis.baehni@uzh.ch}
 	}
+	%Header left
+	\fancyhead[L]{
+		\footnotesize
+		Internship in Numerics\\
+		Autumn 2017
+	}
 	%Page numbering in footer
 	\fancyfoot[C]{\thepage}
 	%Separation line header and footer
@@ -44,9 +52,15 @@
 	%\renewcommand{\footrulewidth}{0.4pt}
 	
 	\setlength{\headheight}{19pt} 
-
+\usepackage{graphicx}
+\usepackage{subcaption}
 %Title
 \usepackage[foot]{amsaddr}
+\usepackage{upref}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\DeclareMathAlphabet{\mathscrbf}{OMS}{mdugm}{b}{n}
+%\usepackage{mathptmx}
 \usepackage{xspace}
 \makeatletter
 \def\@textbottom{\vskip \z@ \@plus 1pt}
@@ -54,26 +68,21 @@
 \usepackage{etoolbox}
 \patchcmd{\abstract}{\scshape\abstractname}{\textbf{\abstractname}}{}{}
 
-%Switching commands for different section formats
-%Mainsectionsytle
-\newcommand{\mainsectionstyle}{%
-  	\renewcommand{\@secnumfont}{\bfseries}
-  	\renewcommand\section{\@startsection{section}{1}%
-    	\z@{.5\linespacing\@plus.7\linespacing}{-.5em}%
-    	{\normalfont\bfseries}}%
+\usepackage[all,cmtip]{xy}
+
+%Section, subsection and subsubsection font
+%------------------------------------------
+\makeatletter
+	\renewcommand{\@secnumfont}{\bfseries}
+	\renewcommand\section{\@startsection{section}{1}%
+  	\z@{.7\linespacing\@plus\linespacing}{.5\linespacing}%
+  	{\normalfont\bfseries\centering}}
 	\renewcommand\subsection{\@startsection{subsection}{2}%
     	\z@{.5\linespacing\@plus.7\linespacing}{-.5em}%
     	{\normalfont\bfseries}}%
 	\renewcommand\subsubsection{\@startsection{subsubsection}{3}%
     	\z@{.5\linespacing\@plus.7\linespacing}{-.5em}%
     	{\normalfont\bfseries}}%
-}
-\newcommand{\originalsectionstyle}{%
-\def\@secnumfont{\bfseries}%\mdseries
-\def\section{\@startsection{section}{1}%
-  \z@{.7\linespacing\@plus\linespacing}{.5\linespacing}%
-  {\normalfont\bfseries\centering}}
-}
 %Formatting title of TOC
 \renewcommand{\contentsnamefont}{\bfseries}
 %Table of Contents
@@ -155,6 +164,11 @@
 \DeclareMathOperator\Arg{Arg}
 \DeclareMathOperator\sech{sech}
 \DeclareMathOperator*\esssup{ess.sup}
+\DeclareMathOperator\id{id}
+\DeclareMathOperator\res{res}
+\let\div\undefined
+\DeclareMathOperator\div{div}
+\DeclareMathOperator\sgn{sgn}
 %\usepackage{hhline}
 %\usepackage{booktabs} 
 %\usepackage{array}
@@ -186,11 +200,11 @@
   {}                                     %Space below
   {\itshape}		                     %Body font
   {}                                     %Indent amount
-  {\scshape}                             %Theorem head font
+  {\bfseries}                             %Theorem head font
   {.}                                    %Punctuation after theorem head
   { }                                    %Space after theorem head, ' ', 
   										 %	or \newline
-  {} 
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}} 
 \theoremstyle{bold}
 \newtheorem*{definition*}{Definition}
 \newtheorem{definition}{Definition}[section]
@@ -202,9 +216,33 @@
 \newtheorem{corollary}{Corollary}[section]
 \newtheorem*{theorem*}{Theorem}
 \newtheorem{theorem}{Theorem}[section]
-\newtheorem{example}{Example}[section]
-\newtheorem*{remark*}{Remark}
+\newtheoremstyle{solution}              	 %Name
+{}                                     %Space above
+{}                                     %Space below
+{}		      			               %Body font
+{}                                     %Indent amount
+{\bfseries}                             %Theorem head font
+{.}                                    %Punctuation after theorem head
+{ }                                    %Space after theorem head, ' ', 
+%	or \newline
+{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}} 
+\theoremstyle{solution}
+\newtheorem*{solution}{Lösung}
 \newtheorem{remark}{Remark}[section]
+\newtheorem{examples}{Examples}[section]
+\newtheorem{example}{Example}[section]
+\newtheoremstyle{exercise}              	 %Name
+{}                                     %Space above
+{}                                     %Space below
+{\small}		      			               %Body font
+{}                                     %Indent amount
+{\bfseries}                             %Theorem head font
+{.}                                    %Punctuation after theorem head
+{ }                                    %Space after theorem head, ' ', 
+%	or \newline
+{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}} 
+\theoremstyle{exercise}
+\newtheorem{exercise}{Aufgabe}
 %German non-ASCII-Characters
 %Graphics-Tool
 %\usepackage{tikz}
@@ -215,7 +253,7 @@
 %Bibliographie
 \usepackage[backend=bibtex, style=alphabetic]{biblatex}
 %\usepackage[babel, german = swiss]{csquotes}
-\bibliography{Bibliography}
+\bibliography{bibliography}
 %PDF-Linking
 %\usepackage[hyphens]{url}
 \usepackage[bookmarksopen=true,bookmarksnumbered=true]{hyperref}
@@ -228,3 +266,46 @@
 }
 %Weierstrass-P symbol for power set
 \newcommand{\powerset}{\raisebox{.15\baselineskip}{\Large\ensuremath{\wp}}}
+\newcommand{\bld}[1]{\boldmath\textit{\textbf{#1}}\unboldmath}
+
+\makeatletter
+\providecommand*{\rightharpoonupfill@}{%
+  \arrowfill@\relbar\relbar\rightharpoonup
+}
+\providecommand*{\xrightharpoonup}[2][]{%
+  \ext@arrow 0579\rightharpoonupfill@{#1}{#2}%
+}
+\makeatother
+
+\usepackage{listings}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\scriptsize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
